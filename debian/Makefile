@@ -5,11 +5,9 @@ lxml: $(SNAKES_HOME)/lib/libxslt.so $(SNAKES_HOME)/lib/python2.7/site-packages/l
 	cd lxml-3.0.2 ; PATH=$(BUILD_PATH) $(SNAKES_HOME)/bin/python setup.py build --with-cython 
 
 atlas:
-	mkdir -p libatlas-3.8.4
-	cd libatlas-3.8.4 ; PATH=$(BUILD_PATH) CFLAGS="-I$(SNAKES_HOME)/include -I$(SNAKES_HOME)/include/ncurses -I$(SNAKES_HOME)/include/libxml2/libxml" CPPFLAGS="-I$(SNAKES_HOME)/include -I$(SNAKES_HOME)/include/ncurses -I$(SNAKES_HOME)/include/libxml2/libxml" LDFLAGS="-L$(SNAKES_HOME)/lib" ../atlas-3.8.4/configure --prefix=$(SNAKES_HOME) -Si cputhrchk 0
-	cd libatlas-3.8.4 ; PATH=$(BUILD_PATH) CFLAGS="-I$(SNAKES_HOME)/include -I$(SNAKES_HOME)/include/ncurses -I$(SNAKES_HOME)/include/libxml2/libxml" CPPFLAGS="-I$(SNAKES_HOME)/include -I$(SNAKES_HOME)/include/ncurses -I$(SNAKES_HOME)/include/libxml2/libxml" LDFLAGS="-L$(SNAKES_HOME)/lib" make
-	cd libatlas-3.8.4 ; PATH=$(BUILD_PATH) CFLAGS="-I$(SNAKES_HOME)/include -I$(SNAKES_HOME)/include/ncurses -I$(SNAKES_HOME)/include/libxml2/libxml" CPPFLAGS="-I$(SNAKES_HOME)/include -I$(SNAKES_HOME)/include/ncurses -I$(SNAKES_HOME)/include/libxml2/libxml" LDFLAGS="-L$(SNAKES_HOME)/lib" make install
-	
+	cd atlas-3.8.4 ; PATH=$(BUILD_PATH) CFLAGS="-I$(SNAKES_HOME)/include -I$(SNAKES_HOME)/include/ncurses -I$(SNAKES_HOME)/include/libxml2/libxml" CPPFLAGS="-I$(SNAKES_HOME)/include -I$(SNAKES_HOME)/include/ncurses -I$(SNAKES_HOME)/include/libxml2/libxml" LDFLAGS="-L$(SNAKES_HOME)/lib" ../atlas-3.8.4/configure --prefix=$(SNAKES_HOME) -Si cputhrchk 0
+	cd atlas-3.8.4 ; PATH=$(BUILD_PATH) CFLAGS="-I$(SNAKES_HOME)/include -I$(SNAKES_HOME)/include/ncurses -I$(SNAKES_HOME)/include/libxml2/libxml" CPPFLAGS="-I$(SNAKES_HOME)/include -I$(SNAKES_HOME)/include/ncurses -I$(SNAKES_HOME)/include/libxml2/libxml" LDFLAGS="-L$(SNAKES_HOME)/lib" make
+	cd atlas-3.8.4 ; PATH=$(BUILD_PATH) CFLAGS="-I$(SNAKES_HOME)/include -I$(SNAKES_HOME)/include/ncurses -I$(SNAKES_HOME)/include/libxml2/libxml" CPPFLAGS="-I$(SNAKES_HOME)/include -I$(SNAKES_HOME)/include/ncurses -I$(SNAKES_HOME)/include/libxml2/libxml" LDFLAGS="-L$(SNAKES_HOME)/lib" make install
 
 $(SNAKES_HOME)/lib/libxslt.so: $(SNAKES_HOME)/lib/python2.7/site-packages/libxml2mod.so $(SNAKES_HOME)/lib/libgcrypt.so 
 	cd libxslt-1.1.26 ; PATH=$(BUILD_PATH) CFLAGS="-I$(SNAKES_HOME)/include -I$(SNAKES_HOME)/include/ncurses -I$(SNAKES_HOME)/include/libxml2/libxml" CPPFLAGS="-I$(SNAKES_HOME)/include -I$(SNAKES_HOME)/include/ncurses -I$(SNAKES_HOME)/include/libxml2/libxml" LDFLAGS="-L$(SNAKES_HOME)/lib" ./configure --prefix=$(SNAKES_HOME) 
@@ -127,3 +125,46 @@ tcl: $(SNAKES_HOME)/lib/libtcl8.5.so
 $(SNAKES_HOME)/lib/libtcl8.5.so:
 	cd tcl8.5-8.5.11/unix ; PATH=$(PATH):$(SNAKES_HOME)/bin ./configure --prefix=$(SNAKES_HOME) ; make ; make install ; cd ../..
 
+
+.PHONY: get_libs
+
+get-libs: sources/atlas-3.8.4 sources/bzip2-1.0.6 sources/gdbm-1.8.3 sources/libgcrypt11-1.5.0 sources/libgpg-error-1.10 sources/libxml2-2.7.8.dfsg sources/libxslt-1.1.26 sources/ncurses-5.9 sources/openssl-1.0.1 sources/python2.7-2.7.3 sources/sqlite3-3.7.9 sources/tcl8.5-8.5.11 sources/zlib-1.2.3.4.dfsg
+
+sources/atlas-3.8.4:
+	cd sources && apt-get source atlas
+
+sources/bzip2-1.0.6:
+	cd sources && apt-get source bzip2
+
+sources/gdbm-1.8.3:
+	cd sources && apt-get source gdbm
+
+sources/libgcrypt11-1.5.0:
+	cd sources && apt-get source libgcrypt11
+
+sources/libgpg-error-1.10:
+	cd sources && apt-get source libgpg-error
+
+sources/libxml2-2.7.8.dfsg:
+	cd sources && apt-get source libxml2
+
+sources/libxslt-1.1.26:
+	cd sources && apt-get source libxslt
+
+sources/ncurses-5.9:
+	cd sources && apt-get source ncurses
+
+sources/openssl-1.0.1:
+	cd sources && apt-get source openssl
+
+sources/python2.7-2.7.3:
+	cd sources && apt-get source python2.7
+
+sources/sqlite3-3.7.9:
+	cd sources && apt-get source sqlite3
+
+sources/tcl8.5-8.5.11:
+	cd sources && apt-get source tcl8.5
+
+sources/zlib-1.2.3.4.dfsg:
+	cd sources && apt-get source zlib
