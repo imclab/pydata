@@ -65,66 +65,64 @@ $(SNAKES_HOME)/bin/easy_install: $(SNAKES_HOME)/bin/python
 
 python: $(SNAKES_HOME)/bin/python
 
-$(SNAKES_HOME)/bin/python: $(SNAKES_HOME)/lib/libreadline.so $(SNAKES_HOME)/lib/libssl.so $(SNAKES_HOME)/lib/libgdbm.so $(SNAKES_HOME)/lib/libbz2.a $(SNAKES_HOME)/lib/libtcl8.5.so $(SNAKES_HOME)/lib/libz.so
-	cd python2.7-2.7.3 ; CPPFLAGS="-I$(SNAKES_HOME)/include -I$(SNAKES_HOME)/include/ncurses" LDFLAGS="-L$(SNAKES_HOME)/lib" ./configure --prefix=$(SNAKES_HOME) ; cd ../
-	cd python2.7-2.7.3 ; CPPFLAGS="-I$(SNAKES_HOME)/include -I$(SNAKES_HOME)/include/ncurses" LDFLAGS="-L$(SNAKES_HOME)/lib" make ; cd ..
-	cd python2.7-2.7.3 ; make install ; cd ../
+$(SNAKES_HOME)/bin/python: sources/python2.7-2.7.3 $(SNAKES_HOME)/lib/libreadline.so $(SNAKES_HOME)/lib/libssl.so $(SNAKES_HOME)/lib/libgdbm.so $(SNAKES_HOME)/lib/libbz2.a $(SNAKES_HOME)/lib/libtcl8.5.so $(SNAKES_HOME)/lib/libz.so
+	cd sources/python2.7-2.7.3 ; CPPFLAGS="-I$(SNAKES_HOME)/include -I$(SNAKES_HOME)/include/ncurses" LDFLAGS="-L$(SNAKES_HOME)/lib" ./configure --prefix=$(SNAKES_HOME) ; cd ../
+	cd sources/python2.7-2.7.3 ; CPPFLAGS="-I$(SNAKES_HOME)/include -I$(SNAKES_HOME)/include/ncurses" LDFLAGS="-L$(SNAKES_HOME)/lib" make ; cd ..
+	cd sources/python2.7-2.7.3 ; make install ; cd ../
 
 .PHONY: readline
 
 readline: $(SNAKES_HOME)/lib/libreadline.so
 
-$(SNAKES_HOME)/lib/libreadline.so: $(SNAKES_HOME)/lib/libncurses.so
-	cd readline6-6.2 ; CPPFLAGS="-I$(SNAKES_HOME)/include -I$(SNAKES_HOME)/include/ncurses" LDFLAGS="-L$(SNAKES_HOME)/lib" ./configure --prefix=$(SNAKES_HOME) ; cd ../
-	cd readline6-6.2 ; CPPFLAGS="-I$(SNAKES_HOME)/include -I$(SNAKES_HOME)/include/ncurses" LDFLAGS="-L$(SNAKES_HOME)/lib" make ; cd ../
-	cd readline6-6.2 ; make install ; cd ../	
+$(SNAKES_HOME)/lib/libreadline.so: sources/readline6-6.2 $(SNAKES_HOME)/lib/libncurses.so
+	cd sources/readline6-6.2 ; CPPFLAGS="-I$(SNAKES_HOME)/include -I$(SNAKES_HOME)/include/ncurses" LDFLAGS="-L$(SNAKES_HOME)/lib" ./configure --prefix=$(SNAKES_HOME) ; cd ../
+	cd sources/readline6-6.2 ; CPPFLAGS="-I$(SNAKES_HOME)/include -I$(SNAKES_HOME)/include/ncurses" LDFLAGS="-L$(SNAKES_HOME)/lib" make ; cd ../
+	cd sources/readline6-6.2 ; make install ; cd ../	
 
 .PHONY: ncurses
 
 ncurses: $(SNAKES_HOME)/lib/libncurses.so
 
-$(SNAKES_HOME)/lib/libncurses.so:
-	cd ncurses-5.9 ; ./configure --prefix=$(SNAKES_HOME) --with-shared ; cd ..
-	cd ncurses-5.9 ; make ; cd ..
-	cd ncurses-5.9 ; make install ; cd ..
+$(SNAKES_HOME)/lib/libncurses.so: sources/ncurses-5.9
+	cd sources/ncurses-5.9 ; ./configure --prefix=$(SNAKES_HOME) --with-shared ; cd ..
+	cd sources/ncurses-5.9 ; make ; cd ..
+	cd sources/ncurses-5.9 ; make install ; cd ..
 
 .PHONY: openssl
 
 openssl: $(SNAKES_HOME)/lib/libssl.so
 
-$(SNAKES_HOME)/lib/libssl.so:
-	cd openssl-1.0.1 ; ./configure --prefix=$(SNAKES_HOME) shared ; cd ..
-	cd openssl-1.0.1 ; make ; cd ..
-	cd openssl-1.0.1 ; make install_sw ; cd ..
+$(SNAKES_HOME)/lib/libssl.so: sources/openssl-1.0.1
+	cd sources/openssl-1.0.1 ; ./configure --prefix=$(SNAKES_HOME) shared ; cd ..
+	cd sources/openssl-1.0.1 ; make ; cd ..
+	cd sources/openssl-1.0.1 ; make install_sw ; cd ..
 	
-
 .PHONY: gdbm
 gdbm: $(SNAKES_HOME)/lib/libgdbm.so
 
-$(SNAKES_HOME)/lib/libgdbm.so:
-	cd gdbm-1.8.3 ; ./configure --prefix=$(SNAKES_HOME) ; make ; make install
+$(SNAKES_HOME)/lib/libgdbm.so: sources/gdbm-1.8.3
+	cd sources/gdbm-1.8.3 ; ./configure --prefix=$(SNAKES_HOME) ; make ; make install
 
 .PHONY: bzlib2
-bzlib2: $(SNAKES_HOME)/lib/libbz2.a
+bzlib2: sources/bzip2-1.0.6 $(SNAKES_HOME)/lib/libbz2.a
 $(SNAKES_HOME)/lib/libbz2.a:
-	cd bzip2-1.0.6 ; make ; make install PREFIX=$(SNAKES_HOME)
+	cd sources/bzip2-1.0.6 ; make ; make install PREFIX=$(SNAKES_HOME)
 
 .PHONY: sqlite3
 
 sqlite3: $(SNAKES_HOME)/lib/libsqlite3.so
 
-$(SNAKES_HOME)/lib/libsqlite3.a: $(SNAKES_HOME)/lib/libtcl8.5.so
-	cd sqlite3-3.7.9 ; PATH=$(PATH):$(SNAKES_HOME)/bin ./configure --prefix=$(SNAKES_HOME) ; cd ..
-	cd sqlite3-3.7.9 ; PATH=$(PATH):$(SNAKES_HOME)/bin make ; cd ..
-	cd sqlite3-3.7.9 ; make install ; cd ..
+$(SNAKES_HOME)/lib/libsqlite3.a: sources/sqlite3-3.7.9 $(SNAKES_HOME)/lib/libtcl8.5.so
+	cd sources/sqlite3-3.7.9 ; PATH=$(PATH):$(SNAKES_HOME)/bin ./configure --prefix=$(SNAKES_HOME) ; cd ..
+	cd sources/sqlite3-3.7.9 ; PATH=$(PATH):$(SNAKES_HOME)/bin make ; cd ..
+	cd sources/sqlite3-3.7.9 ; make install ; cd ..
 
 .PHONY: tcl
 
 tcl: $(SNAKES_HOME)/lib/libtcl8.5.so
 
-$(SNAKES_HOME)/lib/libtcl8.5.so:
-	cd tcl8.5-8.5.11/unix ; PATH=$(PATH):$(SNAKES_HOME)/bin ./configure --prefix=$(SNAKES_HOME) ; make ; make install ; cd ../..
-
+$(SNAKES_HOME)/lib/libtcl8.5.so: tcl8.5-8.5.11
+	cd sources/tcl8.5-8.5.11/unix ; PATH=$(PATH):$(SNAKES_HOME)/bin ./configure --prefix=$(SNAKES_HOME) ; make ; make install ; cd ../..
 
 .PHONY: get_libs
 
